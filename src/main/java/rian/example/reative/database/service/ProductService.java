@@ -12,8 +12,8 @@ public interface ProductService {
 
 	public Uni<Void> save(ProductModel productModel);
 
-	public Uni<Void> update(ProductModel productModel);
+	public Uni<ProductModel> update(ProductModel productModel);
 
-	public Uni<Boolean> delete(ProductModel productModel);
+	public Uni<ProductModel> delete(Long i);
 
 }

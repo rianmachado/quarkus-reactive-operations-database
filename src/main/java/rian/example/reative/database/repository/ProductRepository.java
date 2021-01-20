@@ -1,5 +1,7 @@
 package rian.example.reative.database.repository;
 
+import java.util.function.Function;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -31,8 +33,26 @@ public class ProductRepository {
 		return mutinySession.persist(productEntity).chain(mutinySession::flush);
 	}
 
-	public Uni<Void> update(ProductEntity productEntity) {
-		return mutinySession.merge(productEntity).chain(mutinySession::flush);
+	public Uni<ProductEntity> update(ProductEntity productEntity) {
+
+		Function<ProductEntity, Uni<? extends ProductEntity>> update = entity -> {
+			entity.setDescription(productEntity.getDescription());
+			return mutinySession.flush().onItem().transform(ignore -> productEntity);
+		};
+
+		return mutinySession.find(ProductEntity.class, productEntity.getId()).onItem().ifNotNull()
+				.transformToUni(update);
+
+	}
+
+	public Uni<ProductEntity> delete(ProductEntity productEntity) {
+
+		Function<ProductEntity, Uni<? extends ProductEntity>> delete = entity -> mutinySession.remove(entity)
+				.chain(mutinySession::flush).onItem().transform(ignore -> productEntity);
+
+		return mutinySession.find(ProductEntity.class, productEntity.getId()).onItem().ifNotNull()
+				.transformToUni(delete);
+
 	}
 
 }

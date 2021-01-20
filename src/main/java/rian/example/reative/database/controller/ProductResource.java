@@ -16,8 +16,6 @@
 
 package rian.example.reative.database.controller;
 
-import java.util.function.Function;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -71,20 +69,15 @@ public class ProductResource {
 	@PUT
 	@Path("{id}")
 	public Uni<Response> update(@PathParam Long id, ProductModel productModel) {
-
-		Function<ProductModel, Uni<? extends Response>> update = entity -> {
-			return productServiceImpl.update(productModel).onItem()
-					.transform(ignore -> Response.ok(productModel).build());
-		};
-
-		return productServiceImpl.findById(id).onItem().ifNotNull().transformToUni(update).onItem().ifNull()
-				.continueWith(Response.ok().status(HttpStatus.SC_NOT_FOUND).build());
-
+		productModel.setId(id);
+		return productServiceImpl.update(productModel)
+				.map(model -> Response.ok(model).status(HttpStatus.SC_NO_CONTENT).build());
 	}
 
 	@DELETE
 	@Path("{id}")
-	public Uni<ProductModel> delete(@PathParam Long id) {
-		return null;
+	public Uni<Response> delete(@PathParam Long id) {
+		return productServiceImpl.delete(id)
+				.map(model -> Response.ok(model).status(HttpStatus.SC_ACCEPTED).build());
 	}
 }

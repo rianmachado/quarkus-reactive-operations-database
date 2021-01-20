@@ -27,9 +27,9 @@ public class ProductEntity {
 	@Id
 	@SequenceGenerator(name = "productSequence", sequenceName = "product_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(generator = "productSequence")
-	public Long id;
+	private Long id;
 
 	@Column(length = 40, unique = true)
-	public String description;
+	private String description;
 
 }

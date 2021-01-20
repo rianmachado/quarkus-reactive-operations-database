@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import rian.example.reative.database.entity.ProductEntity;
 import rian.example.reative.database.mapper.ProductMapper;
 import rian.example.reative.database.model.ProductModel;
 import rian.example.reative.database.repository.ProductRepository;
@@ -34,13 +35,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Uni<Void> update(ProductModel productModel) {
-		return productRepository.update(productMapper.toEntity(productModel));
+	public Uni<ProductModel> update(ProductModel productModel) {
+		return productRepository.update(productMapper.toEntity(productModel))
+				.map(entity -> productMapper.toModel(entity));
 	}
 
 	@Override
-	public Uni<Boolean> delete(ProductModel productModel) {
-		return null;
+	public Uni<ProductModel> delete(Long id) {
+		return productRepository.delete(ProductEntity.builder().id(id).build())
+				.map(entity -> productMapper.toModel(entity));
 	}
 
 }
