@@ -20,9 +20,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "product")
-@NamedQuery(name = "Product.findAll", query = "SELECT p FROM ProductEntity p ORDER BY p.description")
-public class ProductEntity {
+@Table(name = "Arsenal")
+@NamedQuery(name = "Arsenal.findAll", query = "SELECT arsenal FROM AppArsenalEntity arsenal ORDER BY arsenal.otherInfo")
+public class AppArsenalEntity {
 
 	@Id
 	@SequenceGenerator(name = "productSequence", sequenceName = "product_id_seq", allocationSize = 1, initialValue = 10)
@@ -30,6 +30,6 @@ public class ProductEntity {
 	private Long id;
 
 	@Column(length = 40, unique = true)
-	private String description;
+	private String otherInfo;
 
 }
