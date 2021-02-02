@@ -12,9 +12,10 @@ import rian.example.reative.database.mapper.AppArsenalMapper;
 import rian.example.reative.database.model.AppArsenalRequestModel;
 import rian.example.reative.database.model.AppArsenalResponseModel;
 import rian.example.reative.database.repository.AppArsenalRepository;
+import rian.example.reative.database.repository.AppArsenalRepositorySupportedPanache;
 
 @Dependent
-public class AppArsenalServiceImpl implements AppArsenalService {
+public class AppArsenalServiceImpl  implements AppArsenalService  {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(AppArsenalServiceImpl.class.getName());
@@ -23,34 +24,52 @@ public class AppArsenalServiceImpl implements AppArsenalService {
 	AppArsenalRepository appArsenalRepository;
 
 	@Inject
-	AppArsenalMapper productMapper;
+	AppArsenalRepositorySupportedPanache appArsenalRepositorySupportedPanache;
+
+	@Inject
+	AppArsenalMapper appArsenalMapper;
+	
+	
 
 	@Override
 	public Multi<AppArsenalResponseModel> findAll() {
-		return appArsenalRepository.findAll().map(entity -> productMapper.toModel(entity));
+		return appArsenalRepository.findAll().map(entity -> appArsenalMapper.toModel(entity));
+	}
+
+	@Override
+	public Multi<AppArsenalResponseModel> findAll(final int pageIndex, final int size, long total) {
+
+		return 
+				appArsenalRepositorySupportedPanache.findAll(pageIndex, size)
+					.map(entity -> appArsenalMapper.toModel(entity));
 	}
 
 	@Override
 	public Uni<AppArsenalResponseModel> findById(Long id) {
-		return appArsenalRepository.findById(id).map(entity -> productMapper.toModel(entity));
+		return appArsenalRepository.findById(id).map(entity -> appArsenalMapper.toModel(entity));
 	}
 
 	@Override
 	public Uni<AppArsenalResponseModel> save(AppArsenalRequestModel productModel) {
-		return appArsenalRepository.save(productMapper.toEntity(productModel, null))
-				.map(entity -> productMapper.toModel(entity));
+		return appArsenalRepository.save(appArsenalMapper.toEntity(productModel, null))
+				.map(entity -> appArsenalMapper.toModel(entity));
 	}
 
 	@Override
 	public Uni<AppArsenalResponseModel> update(AppArsenalRequestModel productModel, Long id) {
-		return appArsenalRepository.update(productMapper.toEntity(productModel, id))
-				.map(entity -> productMapper.toModel(entity));
+		return appArsenalRepository.update(appArsenalMapper.toEntity(productModel, id))
+				.map(entity -> appArsenalMapper.toModel(entity));
 	}
 
 	@Override
 	public Uni<AppArsenalResponseModel> delete(Long id) {
 		return appArsenalRepository.delete(AppArsenalEntity.builder().id(id).build())
-				.map(entity -> productMapper.toModel(entity));
+				.map(entity -> appArsenalMapper.toModel(entity));
+	}
+
+	@Override
+	public Uni<Long> count() {
+		return appArsenalRepositorySupportedPanache.count();
 	}
 
 }

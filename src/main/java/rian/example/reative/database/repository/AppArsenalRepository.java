@@ -1,5 +1,6 @@
 package rian.example.reative.database.repository;
 
+import java.time.LocalDateTime;
 import java.util.function.Function;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +27,7 @@ public class AppArsenalRepository {
 	}
 
 	public Uni<AppArsenalEntity> save(AppArsenalEntity appArsenalEntity) {
+		appArsenalEntity.setModifiedAt(LocalDateTime.now());
 		return mutinySession.persist(appArsenalEntity).chain(mutinySession::flush).map(entity -> appArsenalEntity);
 	}
 
@@ -41,8 +43,13 @@ public class AppArsenalRepository {
 	}
 
 	public Uni<AppArsenalEntity> delete(AppArsenalEntity productEntity) {
-		Function<AppArsenalEntity, Uni<? extends AppArsenalEntity>> delete = entity -> mutinySession.remove(entity)
-				.chain(mutinySession::flush).onItem().transform(ignore -> productEntity);
+		Function<AppArsenalEntity, Uni<? extends AppArsenalEntity>> delete = 
+					entity 
+						-> mutinySession.remove(entity)
+				.chain(mutinySession::flush)
+					.onItem()
+						.transform(ignore -> productEntity);
+		
 		return mutinySession.find(AppArsenalEntity.class, productEntity.getId()).onItem().ifNotNull()
 				.transformToUni(delete).onItem().ifNull().continueWith(AppArsenalEntity.builder().build());
 

@@ -1,5 +1,7 @@
 package rian.example.reative.database.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,14 +24,21 @@ import lombok.Setter;
 @Entity
 @Table(name = "Arsenal")
 @NamedQuery(name = "Arsenal.findAll", query = "SELECT arsenal FROM AppArsenalEntity arsenal ORDER BY arsenal.otherInfo")
-public class AppArsenalEntity {
+public class AppArsenalEntity{
 
 	@Id
-	@SequenceGenerator(name = "productSequence", sequenceName = "product_id_seq", allocationSize = 1, initialValue = 10)
-	@GeneratedValue(generator = "productSequence")
+	@SequenceGenerator(name = "apparsenalSequence", sequenceName = "apparsenal_id_seq", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(generator = "apparsenalSequence")
 	private Long id;
 
 	@Column(length = 40, unique = true)
 	private String otherInfo;
+
+	@Builder.Default
+	@Column(name = "created_at", nullable = false, updatable = false)
+	LocalDateTime createdAt = LocalDateTime.now();
+
+	@Column(name = "modified_at", nullable = false)
+	LocalDateTime modifiedAt;
 
 }
