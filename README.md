@@ -18,3 +18,7 @@ Ao usar a programação restiva, os fluxos de dados serão a espinha dorsal do s
 Os frameworks reativos oferecem uma espetacular caixa de ferramentas para manipulação de stream; podemos filtrá-los, transforma-los, combiná-los entre outras dezenas de operações. 
 
 # Em quais situações posso utilizar?
+
+* __Abstração sobre processamento assícrono:__ Frameworks reativos fornecem uma função simples para processamento assícrono, desafogando sua aplicação dos detalhes mais complexos envolvendo MULTITHREADING e permitindo que seu código possa concentra-se na lógica dde manipulação de eventos. 
+
+* __Chamada para serviços externos(REST, RPC,etc)__ Operações realizadas sobre HTTP são bloqueantes por natureza; Ao fornecer uma simplificação para código assícrono a programação reativa pode ajuda-lo a desbloquear o código de cliente HTTP. Mas isso é a parte mais simples. Em arquitetura de microserviço é comum um código de back-and construir uma composição entre várias chamadas e Frameworks reativos podem ajudar a orquestrar chamadas com a vantagem de NÃO bloquear o código no cliente.
