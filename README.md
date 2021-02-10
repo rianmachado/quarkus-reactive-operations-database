@@ -39,10 +39,10 @@ saída oferecendo muitos beneficios como maior concorrência e desempenho. As th
 
 ```java
   @GET
-	@Path("{id}")
-	public Uni<Response> get(@PathParam("id") final Long id) {
-		return service.findById(id).map(data -> {
-			if (data.getId() == null) {
+  @Path("{id}")
+  public Uni<Response> get(@PathParam("id") final Long id) {
+	return service.findById(id).map(data -> {
+		if (data.getId() == null) {
 				return null;
 			}
 			return ok(data).build();
@@ -50,7 +50,7 @@ saída oferecendo muitos beneficios como maior concorrência e desempenho. As th
 	}
   @GET
   public Multi<PearsonResponseModel> get(){
-    return service.findAll();
+    	return service.findAll();
   }
 ```
 
