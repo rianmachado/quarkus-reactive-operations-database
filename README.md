@@ -54,3 +54,11 @@ saída oferecendo muitos beneficios como maior concorrência e desempenho. As th
   }
 ```
 
+## Pré requisitos
+* Java 11 and later
+* Lombok
+* Docker (Para execução do Postgres)
+
+## Start da aplicação
+Após iniciar o containner Postgres(veja commando-docker.txt) execute: `mvn compile quarkus:dev`
+
