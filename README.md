@@ -10,7 +10,7 @@ Na programação reativa as coisas aconrecem de forma bem diferente. Os eventos 
 
 As execuções são manipuladas a partir de eventos que notificam os interessados que estão a espera de mensagens para que cada um possa realizar seu trabalho.
 
-# Um pouci mais
+# Um pouco mais
 Ao usar a programação restiva, os fluxos de dados serão a espinha dorsal do seu aplicativo. Eventos, mensagens, chamadas e até mesmo falhas serão transmitidas por um fluxo de dados, possibilitando observar esses fluxos e reagir quando um valor é emitido. Pode-se dizer que a programação reativa é uma versão extendida e mais poderosa que do padrão [Observer](https://pt.wikipedia.org/wiki/Observer)
 
 Os frameworks reativos oferecem uma espetacular caixa de ferramentas para manipulação de stream; podemos filtrá-los, transforma-los, combiná-los entre outras dezenas de operações. 
@@ -36,4 +36,21 @@ saída oferecendo muitos beneficios como maior concorrência e desempenho. As th
 
 * io.smallrye.mutiny.Uni - for asynchronous action providing 0 or 1 result
 * io.smallrye.mutiny.Multi - for multi-item (with back-pressure) streams
+
+```java
+  @GET
+	@Path("{id}")
+	public Uni<Response> get(@PathParam("id") final Long id) {
+		return service.findById(id).map(data -> {
+			if (data.getId() == null) {
+				return null;
+			}
+			return ok(data).build();
+		}).onItem().ifNull().continueWith(status(Status.NOT_FOUND).build());
+	}
+  @GET
+  public Multi<PearsonResponseModel> get(){
+    return service.findAll();
+  }
+```
 
