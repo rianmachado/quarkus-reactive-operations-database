@@ -1,7 +1,7 @@
 # Programação Reativa Com Quarkus
 A programação reativa é um modelo de desenvolvimento estruturado em torno de fluxos de dados assincronos.
 
-Usando a forma tradicional de desenvolvimento para preparar uma boa cerveja chamamos o método prepararAgua(temperatura) e 
+Usando a forma tradicional de desenvolvimento para preparar uma boa cerveja podemos considerar a chamada para o método prepararAgua(temperatura) e 
 prepararMalte(), assim que tivermos isso pronto acionamos o método moer(malte) na sequencia executamos o
 metodo misturarTudo() e por fim adicionarLupulo(). Perfeito, a cerveja estará deliciosa.
 
