@@ -31,3 +31,9 @@ Mas, se a solicitação HTTP tem como alvo um método reativo (JAX-RS usando RES
 saída oferecendo muitos beneficios como maior concorrência e desempenho. As threads de entrada e saída(I/O) são usadas para lidar com varias solicitações simutânias. Assim que o tratamento de Uma solicitação não pode progredir porque precisa executar algum I/O o Quarkus agenda esse I/O continuando assim com a solicitação, quando o I/O agendado é concluido, segue o encadeamento de entrada e saída. Diante disso muitos componentes sã projetados com reativos em mente, como acesso ao banco de dados (PostgresQl: MySQliM
 saída oferecendo muitos beneficios como maior concorrência e desempenho. As threads de entrada e saída(I/O) são usadas para lidar com varias solicitações simutânias. Assim que o tratamento de Uma solicitação não pode progredir porque precisa executar algum I/O o Quarkus agenda esse I/O continuando assim com a solicitação, quando o I/O agendado é concluido, segue o encadeamento de entrada e saída. Diante disso muitos componentes do Quarkus são projetados com características reativas em mente como por exemplo: acesso a banco de dados(Postgres, MySQL,Mongo, etc), serviços de aplicativo(e-mail,template engine,etc), mensagens(Kafka, AMQP,etc) e assim por diante. Mas para ser beneficiado totalmente desse modelo, __o código do aplicativo deve ser escrito de maneira não bloqueante.__ É ai que ter uma API reativa torna-se uma arma definitiva.
 
+# Importante
+É imprescindível termos em mente que iremos manipular o Vert.x a partir do [Mutiny](https://smallrye.io/smallrye-mutiny/),biblioteca de programação reativa que permite expressar e compor ações assícronas de duas formas: 
+
+* io.smallrye.mutiny.Uni - for asynchronous action providing 0 or 1 result
+* io.smallrye.mutiny.Multi - for multi-item (with back-pressure) streams
+
