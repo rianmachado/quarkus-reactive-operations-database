@@ -25,7 +25,7 @@ Os frameworks reativos oferecem uma espetacular caixa de ferramentas para manipu
 Quarkus é reativo. Nele encontraremos um motor reativo chamado de Vert.x. Todas as entradas e saídas de rede passam pelo Vertx de forma não
 bloqueante. Imagine uma solicitação HTTP de entrada. O servidor HTTP(Vert.x) embutido no Quarkus recebe a solicitação e a encaminha para o aplicativo.
 Se a solicitação for direcionada a um método imperative (JAX-RS tradicional), a camada de roteamento invoca o método de recurso em uma __thread de
-trabalho e grava a resposta quando os dados estiverem disponiveis. Até agora, nada de novo ou excepcional.
+trabalho e grava a resposta quando os dados estiverem disponiveis. Até agora, nada de novo ou excepcional__.
 
 Mas, se a solicitação HTTP tem como alvo um método reativo (JAX-RS usando RESTEasy Reactive), a camada de roteamento invoca a thread de entrada e
 saída oferecendo muitos beneficios como maior concorrência e desempenho. As threads de entrada e saída(I/O) são usadas para lidar com varias solicitações simutânias. Assim que o tratamento de Uma solicitação não pode progredir porque precisa executar algum I/O o Quarkus agenda esse I/O continuando assim com a solicitação, quando o I/O agendado é concluido, segue o encadeamento de entrada e saída. Diante disso muitos componentes sã projetados com reativos em mente, como acesso ao banco de dados (PostgresQl: MySQliM
