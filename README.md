@@ -1,5 +1,5 @@
 # Programação Reativa Com Quarkus
-A programação reativa é um modelo de desenvolvimento estruturado em torno de fluxos de dados assincronos.
+A programação reativa é um modelo de desenvolvimento estruturado em torno de fluxos de dados assíncronos.
 
 Usando a forma tradicional de desenvolvimento para preparar uma boa cerveja podemos considerar a chamada para o método prepararAgua(temperatura) e 
 prepararMalte(), assim que tivermos isso pronto acionamos o método moer(malte) na sequencia executamos o
